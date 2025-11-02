@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import GithubContext from '../../context/github/GithubContext';
+import AlertContext  from '../../context/alert/AlertContext';
 
 function UserSearch() {
     const { users, searchUsers, clearUsers } = useContext(GithubContext);
+    const { alert, setAlert } = useContext(AlertContext);
     const [text, setText] = useState('');
 
     const handleTextChange = (e) => {
@@ -12,7 +14,7 @@ function UserSearch() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (text === '') {
-            alert('Please enter a username');
+            setAlert('error', 'Please enter a username');
         } else {
             searchUsers(text);
             setText('');
@@ -27,12 +29,12 @@ function UserSearch() {
                         <div className='relative'>
                             <input
                                 type = 'text'
-                                className = 'w-full pr-40 bg-gray-200 input input-lg text-black'
+                                className = 'w-full h-14 pr-40 bg-gray-200 input input-lg text-black'
                                 placeholder = 'Search...'
                                 value={text}
                                 onChange={handleTextChange}
                             />
-                            <button className='absolute top-0 right-0 rounded-l-none w-36 btn btn-ghost h-13 btn-lg bg-green-700'>
+                            <button className='absolute top-0 right-0 rounded-l-none w-36 btn btn-ghost h-14 btn-lg bg-green-700'>
                                 Go
                             </button>
                         </div>
@@ -42,7 +44,7 @@ function UserSearch() {
             <div>
                 {(users && users.length > 0) && (
                     <button
-                        className='btn btn-ghost btn-lg bg-red-700'
+                        className='btn btn-ghost btn-lg bg-red-700 h-14'
                         onClick={clearUsers}
                     >
                         Clear
