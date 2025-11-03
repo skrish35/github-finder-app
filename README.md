@@ -4,14 +4,16 @@ Github Finder App allows you to search for a user and fetch relevant user profil
 Provides an option to visit the searched user profile to get the profile information and a list of repositories.
 Uses Github API to make requests and fetch the reponse.
 
-# Usage
+# Usage:
+- Clone the repo
+```git clone https://github.com/skrish35/feedback-rating-app.git```
 
-#npm install
-To Install node modules 
+- Install Dependencies
+```npm install```
 
-#npm start
-Runs the app in the development mode.
-Open http://localhost:3000
+- Run the application
+```npm start```
+- Open http://localhost:3000
 
-#npm run build
-Builds the app for production to the build folder.
+- Builds the app for production to the build folder
+```npm run build```
