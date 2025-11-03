@@ -6,6 +6,8 @@ const GithubContext = createContext();
 export const GithubProvider = ({ children }) => {
     const initialState = {
         users: [],
+        user: {},
+        repos: [],
         loading: false
     };
 
@@ -37,11 +39,47 @@ export const GithubProvider = ({ children }) => {
         dispatch({ type: 'SET_USERS', payload: [] });
     }
 
+    // Get single user profile data.
+    const getUser = async (login) => {
+            setLoading(true);
+            try {
+                const response = await fetch(`https://api.github.com/users/${login}`);
+                const data = await response.json();
+                dispatch({ type: 'SET_USER', payload: data });
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+    }
+
+    const getUserRepos = async (login) => {
+        setLoading(true);
+        const params = new URLSearchParams({
+            sort: 'created',
+            per_page: 10
+        });
+
+        try {
+            const response = await fetch(`https://api.github.com/users/${login}/repos?${params}`);
+            const data = await response.json();
+            dispatch({ type: 'SET_REPOS', payload: data });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return <GithubContext.Provider value={{
         loading: state.loading,
         users: state.users,
+        user: state.user,
+        repos: state.repos,
         searchUsers,
-        clearUsers
+        clearUsers,
+        getUser,
+        getUserRepos,
     }}>
         {children}
     </GithubContext.Provider>
